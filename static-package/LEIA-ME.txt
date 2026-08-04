@@ -1,0 +1,49 @@
+IFEED — PARTE 2 | GUIA RÁPIDO
+
+1. O que foi criado
+Login Google com Firebase Authentication, SPA em JavaScript puro com rotas por hash, painel, doações disponíveis, minhas coletas, minhas doações, impacto, reconhecimentos, perfil e logout.
+
+2. Configurar o Firebase
+1) Acesse https://console.firebase.google.com e crie um projeto.
+2) Em “Visão geral”, adicione um aplicativo Web (ícone </>).
+3) Copie o objeto firebaseConfig exibido.
+4) Abra js/firebase-config.js e substitua apenas os valores PLACEHOLDER.
+5) No Firebase, abra Build > Authentication > Get started.
+6) Em Sign-in method, ative Google e escolha um e-mail de suporte.
+7) Em Authentication > Settings > Authorized domains, confirme localhost.
+8) Não coloque senha, token privado ou chave de serviço no projeto.
+
+3. Executar no VS Code
+1) Instale a extensão Live Server.
+2) Abra a pasta ifeed no VS Code.
+3) Clique com o botão direito em index.html e escolha “Open with Live Server”.
+4) Não abra com file://; Firebase precisa de um servidor local.
+
+4. Roteiro de teste
+- Entre pelo popup oficial do Google.
+- Confirme “Quero doar” ou “Quero receber”.
+- Teste as rotas app.html#painel até app.html#perfil.
+- Em Doações disponíveis, filtre, abra detalhes e reserve.
+- Em Minhas coletas, confirme coleta e marque como entregue.
+- Em Minhas doações, cadastre, edite, pause, ative e exclua.
+- No formulário, use um CEP brasileiro válido e teste o ViaCEP.
+- Edite o Perfil, salve, recarregue e confira a persistência.
+- Clique em Sair, confirme e verifique o retorno ao login.
+
+5. O que é demonstrativo
+Doações, estabelecimentos, endereços aproximados, distâncias, métricas, atividades, selos e certificados. Tudo é salvo apenas no localStorage deste navegador. Não informe dados pessoais reais.
+
+6. O que precisará de backend
+Banco de dados real, regras de acesso por usuário, validação do Firebase ID Token no servidor, upload seguro de fotos, mapa OpenStreetMap completo, notificações, auditoria, certificado oficial, prevenção de fraude e conformidade com a LGPD. A proteção em JavaScript impede o acesso normal à interface, mas produção exige validação de identidade e autorização no servidor.
+
+7. Checklist
+[ ] firebaseConfig preenchido
+[ ] Google ativado no Firebase
+[ ] localhost autorizado
+[ ] Live Server em execução
+[ ] Login e logout testados
+[ ] Todas as rotas testadas
+[ ] Reserva e coleta testadas
+[ ] Cadastro e ViaCEP testados
+[ ] Perfil testado
+[ ] Nenhuma credencial secreta adicionada

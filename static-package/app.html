@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Área interna da plataforma iFeed.">
+  <title>Área interna | iFeed</title>
+  <link rel="icon" href="assets/img/logo-ifeed.png">
+  <link rel="stylesheet" href="css/interno.css">
+</head>
+<body class="internal-app">
+  <a class="skip-link" href="#conteudo-interno">Pular para o conteúdo</a>
+  <aside class="app-sidebar" id="sidebar">
+    <div class="app-brand"><img src="assets/img/logo-ifeed.png" alt="Logo iFeed"><span>Área interna</span></div>
+    <span class="demo-pill">● PROTÓTIPO DEMONSTRATIVO</span>
+    <nav class="side-nav" aria-label="Menu da área interna">
+      <button class="nav-link" data-route="painel"><span class="nav-icon">▦</span>Painel</button>
+      <button class="nav-link" data-route="doacoes"><span class="nav-icon">⌖</span>Doações disponíveis</button>
+      <button class="nav-link" data-route="coletas"><span class="nav-icon">⇄</span>Minhas coletas</button>
+      <button class="nav-link" data-route="minhas-doacoes"><span class="nav-icon">＋</span>Minhas doações</button>
+      <button class="nav-link" data-route="impacto"><span class="nav-icon">↗</span>Impacto</button>
+      <button class="nav-link" data-route="reconhecimentos"><span class="nav-icon">★</span>Reconhecimentos</button>
+      <button class="nav-link" data-route="perfil"><span class="nav-icon">○</span>Perfil</button>
+    </nav>
+    <div class="logout-nav"><button class="nav-link" data-action="logout"><span class="nav-icon">↪</span>Sair</button></div>
+  </aside>
+  <div class="app-main">
+    <header class="app-topbar">
+      <button class="mobile-menu-trigger" id="menu-trigger" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
+      <label class="location-input"><span aria-hidden="true">⌖</span><input id="location-field" placeholder="Digite um endereço" aria-label="Localização demonstrativa"></label>
+      <div class="top-actions">
+        <button class="icon-button" type="button" data-action="notifications" aria-label="Notificações">♧</button>
+        <button class="user-chip" id="user-chip" type="button" aria-expanded="false"><span class="avatar" id="top-avatar">i</span><span><strong id="top-name">Usuário</strong><small id="top-role">perfil</small></span></button>
+        <div class="profile-menu hidden" id="profile-menu"><button data-route="perfil">Ver perfil</button><button data-action="logout">Sair da conta</button></div>
+      </div>
+    </header>
+    <main class="app-content" id="conteudo-interno" tabindex="-1"><div class="empty-state"><div class="loader" aria-label="Carregando"></div></div></main>
+  </div>
+  <nav class="mobile-bottom" aria-label="Navegação inferior">
+    <button data-route="painel"><span>▦</span>Painel</button><button data-route="doacoes"><span>⌖</span>Doações</button><button data-action="new-donation"><span>＋</span>Nova doação</button><button data-route="impacto"><span>↗</span>Impacto</button><button data-route="perfil"><span>○</span>Perfil</button>
+  </nav>
+  <div class="toast-region" id="toast-region" role="status" aria-live="polite"></div>
+  <div class="modal-backdrop hidden" id="modal-backdrop">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-head"><div><span class="internal-kicker">iFeed</span><h2 id="modal-title">Janela</h2></div><button class="modal-close" id="modal-close" type="button" aria-label="Fechar">×</button></div><div id="modal-content"></div></section>
+  </div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
