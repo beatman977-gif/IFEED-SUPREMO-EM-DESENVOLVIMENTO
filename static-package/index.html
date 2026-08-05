@@ -411,6 +411,14 @@ h2 em { color: var(--green); font-style: normal; }
       document.querySelectorAll('.final-cta a[href="#inicio"]').forEach(function (link) {
         link.href = link.textContent.toLowerCase().includes("doar") ? "login.html?perfil=doador" : "login.html?perfil=recebedor";
       });
+      document.querySelectorAll('header a, footer a').forEach(function (link) {
+        var texto = link.textContent.trim().toLowerCase();
+        if (texto === "como funciona") link.href = "como-funciona.html";
+        if (texto === "impacto") link.href = "impacto.html";
+        if (texto === "quem somos") link.href = "quem-somos.html";
+      });
+      var logo = document.querySelector('header .brand');
+      if (logo) logo.href = "index.html";
     });
   </script>
 </head>
