@@ -5,6 +5,12 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { firebaseConfig, firebaseConfigurado } from "./firebase-config.js";
 
+/* ========================================================================== 
+   AUTENTICAÇÃO GOOGLE COM FIREBASE
+   Este arquivo cuida somente de login, sessão, proteção da área interna e sair.
+   A configuração pública fica isolada em firebase-config.js.
+   ========================================================================== */
+
 const isLogin = location.pathname.endsWith("login.html") || location.pathname.endsWith("/");
 const isApp = location.pathname.endsWith("app.html");
 const loginButton = document.querySelector("#google-login");
@@ -38,6 +44,7 @@ function showError(message) {
   errorBox.focus?.();
 }
 
+/* Sem configuração, o protótipo informa o problema em vez de falhar em silêncio. */
 if (!firebaseConfigurado) {
   if (loginButton) loginButton.addEventListener("click", () => showError("O Firebase ainda não foi configurado. Abra js/firebase-config.js, cole a configuração pública do seu aplicativo Web e recarregue esta página."));
   if (isApp) location.replace("login.html?erro=configuracao");

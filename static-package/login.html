@@ -1,43 +1,60 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Entre no iFeed com sua conta Google.">
-  <title>Entrar | iFeed</title>
-  <link rel="icon" href="assets/img/logo-ifeed.png">
-  <link rel="stylesheet" href="css/interno.css">
-</head>
-<body>
-  <main class="login-shell">
-    <a class="skip-link" href="#login-card">Pular para o acesso</a>
-    <section class="login-story" aria-label="Apresentação do iFeed">
-      <a class="login-logo" href="index.html" aria-label="Voltar para o início"><img src="assets/img/logo-ifeed.png" alt="Logo oficial iFeed"></a>
-      <div class="login-orb login-orb-a" aria-hidden="true"></div><div class="login-orb login-orb-b" aria-hidden="true"></div>
-      <div class="login-message">
-        <span class="internal-kicker">Juntos contra o desperdício</span>
-        <h1>Transforme alimentos em <em>esperança.</em></h1>
-        <p>Entre na rede que aproxima excedentes alimentares de quem pode fazê-los chegar a quem mais precisa.</p>
-        <div class="login-stats" aria-label="Indicadores demonstrativos"><span><strong>12.580 kg</strong><small>alimentos doados*</small></span><span><strong>25.160</strong><small>refeições geradas*</small></span></div>
-        <small class="demo-label">* Dados demonstrativos do protótipo.</small>
-      </div>
-      <img class="login-food" src="assets/img/caixa-alimentos.png" alt="Caixa com alimentos frescos">
-    </section>
-    <section class="login-form-area">
-      <div class="login-card" id="login-card">
-        <span class="welcome-mark" aria-hidden="true">⌖</span>
-        <p class="internal-kicker">Acesso à plataforma</p>
-        <h2>Bem-vindo ao iFeed</h2>
-        <p>Entre para doar, encontrar alimentos e acompanhar seu impacto.</p>
-        <div id="perfil-sugerido" class="role-suggestion hidden"></div>
-        <button id="google-login" class="google-button" type="button"><span class="google-g" aria-hidden="true">G</span><span>Continuar com Google</span></button>
-        <div id="login-loading" class="role-suggestion hidden" role="status"><span class="loader" aria-hidden="true"></span> Abrindo o acesso seguro do Google…</div>
-        <div id="login-error" class="login-status" role="alert" aria-live="assertive"></div>
-        <p class="privacy-note">O iFeed nunca solicita sua senha Google. O login acontece no popup oficial do provedor. Ao continuar, você concorda com o uso dos seus dados básicos de perfil para esta demonstração.</p>
-        <a class="back-link" href="index.html">← Voltar para o início</a>
-      </div>
-    </section>
-  </main>
-  <script type="module" src="js/auth.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Entre no iFeed com sua conta Google.">
+    <title>Entrar | iFeed</title>
+    <link rel="icon" href="assets/img/logo-ifeed.png">
+    <link rel="stylesheet" href="css/interno.css">
+  </head>
+  <body>
+    <main class="login-shell">
+      <a class="skip-link" href="#login-card">Pular para o acesso</a>
+      <section class="login-story" aria-label="Apresentação do iFeed">
+        <a class="login-logo" href="index.html" aria-label="Voltar para o início">
+          <img src="assets/img/logo-ifeed.png" alt="Logo oficial iFeed">
+        </a>
+        <div class="login-orb login-orb-a" aria-hidden="true"></div>
+        <div class="login-orb login-orb-b" aria-hidden="true"></div>
+        <div class="login-message">
+          <span class="internal-kicker">Juntos contra o desperdício</span>
+          <h1>Transforme alimentos em <em>esperança.</em>
+          </h1>
+          <p>Entre na rede que aproxima excedentes alimentares de quem pode fazê-los chegar a quem mais precisa.</p>
+          <div class="login-stats" aria-label="Indicadores demonstrativos">
+            <span>
+              <strong>12.580 kg</strong>
+              <small>alimentos doados*</small>
+            </span>
+            <span>
+              <strong>25.160</strong>
+              <small>refeições geradas*</small>
+            </span>
+          </div>
+          <small class="demo-label">* Dados demonstrativos do protótipo.</small>
+        </div>
+        <img class="login-food" src="assets/img/caixa-alimentos.png" alt="Caixa com alimentos frescos">
+      </section>
+      <section class="login-form-area">
+        <div class="login-card" id="login-card">
+          <span class="welcome-mark" aria-hidden="true">⌖</span>
+          <p class="internal-kicker">Acesso à plataforma</p>
+          <h2>Bem-vindo ao iFeed</h2>
+          <p>Entre para doar, encontrar alimentos e acompanhar seu impacto.</p>
+          <div id="perfil-sugerido" class="role-suggestion hidden"></div>
+          <button id="google-login" class="google-button" type="button">
+            <span class="google-g" aria-hidden="true">G</span>
+            <span>Continuar com Google</span>
+          </button>
+          <div id="login-loading" class="role-suggestion hidden" role="status">
+            <span class="loader" aria-hidden="true"></span> Abrindo o acesso seguro do Google…</div>
+          <div id="login-error" class="login-status" role="alert" aria-live="assertive"></div>
+          <p class="privacy-note">O iFeed nunca solicita sua senha Google. O login acontece no popup oficial do provedor. Ao continuar, você concorda com o uso dos seus dados básicos de perfil para esta demonstração.</p>
+          <a class="back-link" href="index.html">← Voltar para o início</a>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="js/auth.js"></script>
+  </body>
 </html>

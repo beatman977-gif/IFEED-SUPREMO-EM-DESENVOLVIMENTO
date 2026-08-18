@@ -1,0 +1,25 @@
+# Sistema operacional e editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python e Django (para a próxima etapa)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+db.sqlite3
+media/
+staticfiles/
+
+# Variáveis de ambiente e credenciais privadas
+.env
+.env.*
+*.pem
+*service-account*.json
+
+# Ferramentas e logs
+node_modules/
+*.log
+coverage/

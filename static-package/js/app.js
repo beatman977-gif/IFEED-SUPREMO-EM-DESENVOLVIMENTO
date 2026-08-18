@@ -1,5 +1,9 @@
 import "./auth.js";
 
+/* ========================================================================== 
+   1. ELEMENTOS DA INTERFACE E CONFIGURAÇÕES GERAIS
+   ========================================================================== */
+
 const content = document.querySelector("#conteudo-interno");
 const sidebar = document.querySelector("#sidebar");
 const menuTrigger = document.querySelector("#menu-trigger");
@@ -8,8 +12,26 @@ const modalContent = document.querySelector("#modal-content");
 const modalTitle = document.querySelector("#modal-title");
 const toastRegion = document.querySelector("#toast-region");
 const profileMenu = document.querySelector("#profile-menu");
-const routes = ["painel","doacoes","coletas","minhas-doacoes","impacto","reconhecimentos","perfil"];
-const labels = { painel:"Painel", doacoes:"Doações disponíveis", coletas:"Minhas coletas", "minhas-doacoes":"Minhas doações", impacto:"Impacto", reconhecimentos:"Reconhecimentos", perfil:"Perfil" };
+const routes = [
+  "painel",
+  "doacoes",
+  "coletas",
+  "minhas-doacoes",
+  "impacto",
+  "reconhecimentos",
+  "perfil",
+];
+
+const labels = {
+  painel: "Painel",
+  doacoes: "Doações disponíveis",
+  coletas: "Minhas coletas",
+  "minhas-doacoes": "Minhas doações",
+  impacto: "Impacto",
+  reconhecimentos: "Reconhecimentos",
+  perfil: "Perfil",
+};
+
 const DATA_KEY = "ifeed_dados_v2";
 const PROFILE_PREFIX = "ifeed_perfil_";
 let user = null;
@@ -19,6 +41,12 @@ let previousFocus = null;
 
 const today = new Date();
 const future = days => { const date = new Date(); date.setDate(date.getDate() + days); return date.toISOString().slice(0, 10); };
+
+/* ========================================================================== 
+   2. DADOS DEMONSTRATIVOS DO PROTÓTIPO
+   Troque estes objetos quando quiser alterar os exemplos exibidos.
+   ========================================================================== */
+
 const seed = {
   available: [
     {id:"a1",name:"Pães variados",category:"Pães",amount:50,unit:"unidades",expires:future(3),company:"Padaria Boa Massa",distance:"900 m",storage:"Temperatura ambiente",time:"14h às 18h",status:"Disponível",address:"Centro — São Paulo, SP",description:"Pães frescos do dia, embalados e próprios para consumo.",views:31},
@@ -37,6 +65,10 @@ const seed = {
     {id:"h3",text:"Você alcançou 72% do selo Prata",date:"25 jul, 09:10"}
   ]
 };
+
+/* ========================================================================== 
+   3. UTILITÁRIOS, SEGURANÇA DE TEXTO E PERSISTÊNCIA LOCAL
+   ========================================================================== */
 
 const escapeHTML = value => String(value ?? "").replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#039;",'"':"&quot;"}[char]));
 const formatDate = value => new Date(`${value}T12:00:00`).toLocaleDateString("pt-BR");
@@ -66,6 +98,11 @@ function loadState() {
   if (storedProfile) profile = JSON.parse(storedProfile);
   else profile = { role:null, organization:"", document:"", phone:"", cep:"", address:"", city:"", state:"", description:"", notifications:true, publicImpact:true };
 }
+
+/* ========================================================================== 
+   4. CÁLCULOS E TELAS DA ÁREA INTERNA
+   Cada função abaixo renderiza uma opção do menu lateral.
+   ========================================================================== */
 
 function metrics() {
   const delivered = data.mine.filter(item => item.status === "Entregue");
@@ -118,16 +155,16 @@ function myDonations() {
 }
 
 function impact() {
-  const m=metrics(); content.innerHTML=`${header("Transformação mensurável","Impacto social","Acompanhe resultados estimados gerados pela rede iFeed.")}<div class="tabs"><button class="tab active">Este mês</button><button class="tab">Últimos 3 meses</button><button class="tab">Este ano</button><button class="tab">Todo o período</button></div><div class="notice">Todos os indicadores são demonstrativos. Estimativa usada: aproximadamente 2 refeições por quilo de alimento aproveitado.</div><div class="metric-cards">${metricCard("♧",`${m.kg} kg`,"Alimentos doados")}${metricCard("♨",m.meals,"Refeições estimadas")}${metricCard("↗",`${m.waste} kg`,"Desperdício evitado")}${metricCard("⌂",m.institutions,"Instituições atendidas")}</div><div class="dashboard-grid"><section class="content-card"><div class="card-head"><h2>Evolução mensal</h2><strong>+18% vs. período anterior*</strong></div><div class="mini-chart" role="img" aria-label="Doações: março 35, abril 48, maio 64, junho 58, julho 82, agosto 91 quilos"><span style="height:35%"></span><span style="height:48%"></span><span style="height:64%"></span><span style="height:58%"></span><span style="height:82%"></span><span style="height:91%"></span></div><p>Alternativa textual: o volume cresceu de 35 kg em março para 91 kg em agosto, com pequena queda em junho.</p></section><section class="content-card"><div class="card-head"><h2>Distribuição por categoria</h2></div>${[["Pães",38],["Verduras",27],["Frutas",21],["Refeições",14]].map(([n,v])=>`<div style="margin-bottom:14px"><div class="progress-copy"><span>${n}</span><strong>${v}%</strong></div><div class="progress-track"><span style="width:${v}%"></span></div></div>`).join("")}</section></div>`;
+  const m=metrics(); content.innerHTML=`${header("Transformação mensurável","Impacto social","Acompanhe resultados estimados gerados pela rede iFeed.")}<div class="tabs"><button class="tab active">Este mês</button><button class="tab">Últimos 3 meses</button><button class="tab">Este ano</button><button class="tab">Todo o período</button></div><div class="notice">Todos os indicadores são demonstrativos. Estimativa usada: aproximadamente 2 refeições por quilo de alimento aproveitado.</div><div class="metric-cards">${metricCard("♧",`${m.kg} kg`,"Alimentos doados")}${metricCard("♨",m.meals,"Refeições estimadas")}${metricCard("↗",`${m.waste} kg`,"Desperdício evitado")}${metricCard("⌂",m.institutions,"Instituições atendidas")}</div><div class="dashboard-grid"><section class="content-card"><div class="card-head"><h2>Evolução mensal</h2><strong>+18% vs. período anterior*</strong></div><div class="mini-chart" role="img" aria-label="Doações: março 35, abril 48, maio 64, junho 58, julho 82, agosto 91 quilos"><span style="height:35%"></span><span style="height:48%"></span><span style="height:64%"></span><span style="height:58%"></span><span style="height:82%"></span><span style="height:91%"></span></div><p>Alternativa textual: o volume cresceu de 35 kg em março para 91 kg em agosto, com pequena queda em junho.</p></section><section class="content-card"><div class="card-head"><h2>Distribuição por categoria</h2></div>${[["Pães",38],["Verduras",27],["Frutas",21],["Refeições",14]].map(([n,v])=>`<div class="impact-category"><div class="progress-copy"><span>${n}</span><strong>${v}%</strong></div><div class="progress-track"><span style="width:${v}%"></span></div></div>`).join("")}</section></div>`;
 }
 
 function recognitions() {
   const medal=(cls,name,text,detail,locked=false)=>`<article class="recognition-card ${locked?"locked":""}"><div class="medal ${cls}">${locked?"⌁":"★"}</div><h3>${name}</h3><strong>${text}</strong><p>${detail}</p><div class="progress-track"><span style="width:${locked&&name==="Prata"?72:locked?0:100}%"></span></div></article>`;
-  content.innerHTML=`${header("Reconhecimento","Selos e certificados","Celebre cada etapa da sua jornada de impacto social.")}<div class="tabs"><button class="tab active">Selos</button><button class="tab">Certificados</button></div><div class="recognition-grid">${medal("bronze","Bronze","Primeiro impacto","Conquistado em 18/07/2026")}${medal("silver","Prata","Participação recorrente","72% da meta concluída",true)}${medal("gold","Ouro","Referência em solidariedade","Complete o selo Prata",true)}</div><div style="height:18px"></div><section class="certificate-card"><div><span class="internal-kicker">Certificado digital</span><h2>Empresa parceira no combate ao desperdício</h2><p>A geração oficial será implementada futuramente. Esta visualização não possui validade jurídica.</p><div class="donation-actions"><button class="secondary-action" data-action="certificate-view">Visualizar certificado</button><button class="secondary-action" data-action="certificate-download">Baixar (demonstração)</button></div></div><div class="certificate-preview">iFeed<br>Impacto</div></section>`;
+  content.innerHTML=`${header("Reconhecimento","Selos e certificados","Celebre cada etapa da sua jornada de impacto social.")}<div class="tabs"><button class="tab active">Selos</button><button class="tab">Certificados</button></div><div class="recognition-grid">${medal("bronze","Bronze","Primeiro impacto","Conquistado em 18/07/2026")}${medal("silver","Prata","Participação recorrente","72% da meta concluída",true)}${medal("gold","Ouro","Referência em solidariedade","Complete o selo Prata",true)}</div><section class="certificate-card content-card-spaced"><div><span class="internal-kicker">Certificado digital</span><h2>Empresa parceira no combate ao desperdício</h2><p>A geração oficial será implementada futuramente. Esta visualização não possui validade jurídica.</p><div class="donation-actions"><button class="secondary-action" data-action="certificate-view">Visualizar certificado</button><button class="secondary-action" data-action="certificate-download">Baixar (demonstração)</button></div></div><div class="certificate-preview">iFeed<br>Impacto</div></section>`;
 }
 
 function profileView() {
-  content.innerHTML=`${header("Sua conta","Perfil","Mantenha seus dados e preferências atualizados.")}<div class="profile-hero"><span class="avatar">${user.photo?`<img src="${escapeHTML(user.photo)}" alt="Foto Google">`:escapeHTML(user.name[0])}</span><div><h2>${escapeHTML(user.name)}</h2><p>${escapeHTML(user.email)} · ${profile.role==="recebedor"?"Perfil recebedor":"Perfil doador"}</p></div></div><form class="content-card" id="profile-form"><div class="form-grid"><label class="field"><span>E-mail Google</span><input value="${escapeHTML(user.email)}" readonly></label><label class="field"><span>Tipo de participação</span><select name="role"><option value="doador" ${profile.role==="doador"?"selected":""}>Quero doar</option><option value="recebedor" ${profile.role==="recebedor"?"selected":""}>Quero receber</option></select></label>${field("organization","Nome da organização",profile.organization)}${field("document","CPF ou CNPJ (opcional e demonstrativo)",profile.document)}${field("phone","Telefone",profile.phone)}${field("cep","CEP",profile.cep,"inputmode=\"numeric\" maxlength=\"9\"")}${field("address","Endereço",profile.address)}${field("city","Cidade",profile.city)}${field("state","Estado",profile.state,"maxlength=\"2\"")}<label class="field full"><span>Descrição e áreas de atuação</span><textarea name="description">${escapeHTML(profile.description)}</textarea></label><label class="field full"><span><input name="notifications" type="checkbox" ${profile.notifications?"checked":""}> Receber notificações sobre reservas e coletas</span></label><label class="field full"><span><input name="publicImpact" type="checkbox" ${profile.publicImpact?"checked":""}> Tornar meu perfil de impacto visível</span></label></div><div class="form-actions"><button class="secondary-action" type="button" data-action="profile-cancel">Cancelar</button><button class="primary-action" type="submit">Salvar alterações</button></div></form><section class="content-card" style="margin-top:18px"><h2>Privacidade e dados</h2><p>Este protótipo armazena preferências apenas no seu navegador. Não informe dados sensíveis ou reais. Em produção, dados e permissões precisarão de backend seguro.</p></section>`;
+  content.innerHTML=`${header("Sua conta","Perfil","Mantenha seus dados e preferências atualizados.")}<div class="profile-hero"><span class="avatar">${user.photo?`<img src="${escapeHTML(user.photo)}" alt="Foto Google">`:escapeHTML(user.name[0])}</span><div><h2>${escapeHTML(user.name)}</h2><p>${escapeHTML(user.email)} · ${profile.role==="recebedor"?"Perfil recebedor":"Perfil doador"}</p></div></div><form class="content-card" id="profile-form"><div class="form-grid"><label class="field"><span>E-mail Google</span><input value="${escapeHTML(user.email)}" readonly></label><label class="field"><span>Tipo de participação</span><select name="role"><option value="doador" ${profile.role==="doador"?"selected":""}>Quero doar</option><option value="recebedor" ${profile.role==="recebedor"?"selected":""}>Quero receber</option></select></label>${field("organization","Nome da organização",profile.organization)}${field("document","CPF ou CNPJ (opcional e demonstrativo)",profile.document)}${field("phone","Telefone",profile.phone)}${field("cep","CEP",profile.cep,"inputmode=\"numeric\" maxlength=\"9\"")}${field("address","Endereço",profile.address)}${field("city","Cidade",profile.city)}${field("state","Estado",profile.state,"maxlength=\"2\"")}<label class="field full"><span>Descrição e áreas de atuação</span><textarea name="description">${escapeHTML(profile.description)}</textarea></label><label class="field full"><span><input name="notifications" type="checkbox" ${profile.notifications?"checked":""}> Receber notificações sobre reservas e coletas</span></label><label class="field full"><span><input name="publicImpact" type="checkbox" ${profile.publicImpact?"checked":""}> Tornar meu perfil de impacto visível</span></label></div><div class="form-actions"><button class="secondary-action" type="button" data-action="profile-cancel">Cancelar</button><button class="primary-action" type="submit">Salvar alterações</button></div></form><section class="content-card content-card-spaced"><h2>Privacidade e dados</h2><p>Este protótipo armazena preferências apenas no seu navegador. Não informe dados sensíveis ou reais. Em produção, dados e permissões precisarão de backend seguro.</p></section>`;
 }
 
 function field(name,label,value,attrs="") { return `<label class="field"><span>${label}</span><input name="${name}" value="${escapeHTML(value)}" ${attrs}></label>`; }
@@ -144,6 +181,10 @@ function donationForm(item={}) {
   ${field("start","Retirada — início *",startValue,"required type=\"time\"")}${field("end","Retirada — fim *",endValue,"required type=\"time\"")}${field("street","Logradouro *",item.address?.split(",")[0]||"","required")}${field("number","Número *","","required")}${field("complement","Complemento","")}${field("district","Bairro *","","required")}${field("city","Cidade *","São Paulo","required")}${field("state","Estado *","SP","required maxlength=\"2\"")}
   <label class="field full"><span>Descrição</span><textarea name="description">${escapeHTML(item.description||"")}</textarea></label><label class="field full"><span><input name="safe" type="checkbox" ${item.id?"checked":""} required> Confirmo que o alimento está próprio para consumo *</span><small>A responsabilidade pela verificação permanece com doador e recebedor.</small></label><div id="form-error" class="validation-message field full" role="alert"></div></div><div class="form-actions"><button class="secondary-action" type="button" data-action="close-modal">Cancelar</button><button class="primary-action" type="submit">Salvar doação</button></div></form>`;
 }
+
+/* ========================================================================== 
+   5. ROTEAMENTO POR HASH E JANELAS MODAIS
+   ========================================================================== */
 
 function render() {
   if (!user) return; const route = routes.includes(location.hash.slice(1)) ? location.hash.slice(1) : "painel";
@@ -168,6 +209,10 @@ async function lookupCep(input, form) {
   catch { toast("Não foi possível consultar o CEP agora. Preencha manualmente.","error"); } finally { input.disabled=false; }
 }
 
+/* ========================================================================== 
+   6. FORMULÁRIOS E AÇÕES DE NEGÓCIO DO PROTÓTIPO
+   ========================================================================== */
+
 function handleDonationSubmit(form) {
   const fd=new FormData(form), amount=Number(fd.get("amount")), expires=String(fd.get("expires")), start=String(fd.get("start")), end=String(fd.get("end")), file=fd.get("photo");
   const error=document.querySelector("#form-error"); let message="";
@@ -178,13 +223,17 @@ function handleDonationSubmit(form) {
   data.mine=previous?data.mine.map(current=>current.id===id?item:current):[item,...data.mine]; addActivity(`Doação “${item.name}” foi salva`); save(); closeModal(); toast("Doação salva no protótipo.","success"); myDonations();
 }
 
+/* ========================================================================== 
+   7. EVENTOS GLOBAIS DA INTERFACE
+   ========================================================================== */
+
 document.addEventListener("click", event => {
   const button=event.target.closest("button,[data-route]"); if(!button)return;
   if(button.dataset.route){location.hash=button.dataset.route;profileMenu.classList.add("hidden");return;}
   const action=button.dataset.action,id=button.dataset.id;
   if(action==="logout")confirmModal("Deseja realmente sair da sua conta?","Sair",async()=>{try{await window.ifeedLogout();}catch{toast("Não foi possível sair agora.","error");}});
   if(action==="notifications")toast("Você tem 3 notificações demonstrativas.");
-  if(action==="details"){const d=data.available.find(x=>x.id===id);openModal(d.name,`<img style="width:100%;height:230px;object-fit:cover;border-radius:18px" src="${img(d.category)}" alt="Ilustração da doação"><h3>${d.amount} ${d.unit} · ${escapeHTML(d.company)}</h3><p>${escapeHTML(d.description)}</p><p><strong>Retirada:</strong> ${d.time}<br><strong>Armazenamento:</strong> ${d.storage}<br><strong>Endereço aproximado:</strong> ${escapeHTML(d.address)}</p><div class="notice">Leve identificação e recipiente adequado. Confirme as condições do alimento na coleta.</div><button class="primary-action" data-action="reserve" data-id="${d.id}" ${d.status!=="Disponível"?"disabled":""}>${d.status==="Disponível"?"Reservar doação":d.status}</button>`);}
+  if(action==="details"){const d=data.available.find(x=>x.id===id);openModal(d.name,`<img class="modal-donation-image" src="${img(d.category)}" alt="Ilustração da doação"><h3>${d.amount} ${d.unit} · ${escapeHTML(d.company)}</h3><p>${escapeHTML(d.description)}</p><p><strong>Retirada:</strong> ${d.time}<br><strong>Armazenamento:</strong> ${d.storage}<br><strong>Endereço aproximado:</strong> ${escapeHTML(d.address)}</p><div class="notice">Leve identificação e recipiente adequado. Confirme as condições do alimento na coleta.</div><button class="primary-action" data-action="reserve" data-id="${d.id}" ${d.status!=="Disponível"?"disabled":""}>${d.status==="Disponível"?"Reservar doação":d.status}</button>`);}
   if(action==="reserve"){closeModal();reserve(id);}
   if(action==="new-donation")openModal("Cadastrar nova doação",donationForm());
   if(action==="edit-donation"){const item=data.mine.find(x=>x.id===id);openModal("Editar doação",donationForm(item));}
@@ -219,6 +268,10 @@ document.addEventListener("keydown",event=>{
   if(event.key==="Tab"&&!modalBackdrop.classList.contains("hidden")){const focusable=[...modalBackdrop.querySelectorAll("button,input,select,textarea,a[href]")].filter(el=>!el.disabled);const first=focusable[0],last=focusable.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}}
 });
 window.addEventListener("hashchange",render);
+
+/* ========================================================================== 
+   8. USUÁRIO AUTENTICADO E INICIALIZAÇÃO
+   ========================================================================== */
 
 function updateUserUI(){document.querySelector("#top-name").textContent=user.name;document.querySelector("#top-role").textContent=profile.role||"novo perfil";const avatar=document.querySelector("#top-avatar");avatar.innerHTML=user.photo?`<img src="${escapeHTML(user.photo)}" alt="Foto Google">`:escapeHTML(user.name[0]);}
 function askRole(){const suggested=sessionStorage.getItem("ifeed_perfil_sugerido")||"doador";openModal("Como você quer participar da rede iFeed?",`<div class="role-options"><button class="role-option ${suggested==="doador"?"selected":""}" data-role="doador"><strong>Quero doar</strong><small>Restaurante, padaria, mercado, hortifruti, lanchonete ou pessoa física.</small></button><button class="role-option ${suggested==="recebedor"?"selected":""}" data-role="recebedor"><strong>Quero receber</strong><small>ONG, banco de alimentos, projeto social, instituição ou voluntário.</small></button></div><p class="privacy-note">Você poderá alterar esta escolha na página Perfil.</p>`);document.querySelectorAll("[data-role]").forEach(button=>button.addEventListener("click",()=>{profile.role=button.dataset.role;saveProfile();closeModal();updateUserUI();render();toast("Perfil configurado com sucesso.","success");}));}
