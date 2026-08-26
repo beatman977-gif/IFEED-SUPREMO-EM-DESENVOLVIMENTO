@@ -1,0 +1,48 @@
+# Python / Django - .gitignore
+
+# Ambiente Virtual (Venv)
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Banco de dados local (SQLite)
+*.sqlite3
+*.db
+
+# Arquivos de ambiente e variáveis secretas
+.env
+.env.local
+
+# Cache do Python e arquivos compilados
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Arquivos de Mídia/Uploads de Usuários (Opcional, mas recomendado para dev)
+media/
+
+# Coleta de arquivos estáticos em produção (se usar collectstatic)
+staticfiles/
+
+# Logs e arquivos de depuração
+*.log
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Configurações de IDEs e Editores de Código
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Cobertura de testes e relatórios
+.coverage
+htmlcov/
+.pytest_cache/

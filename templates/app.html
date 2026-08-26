@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Área interna da plataforma iFeed.">
+  <title>Área interna | iFeed</title>
+  <link rel="icon" href="assets/img/logo-ifeed.png">
+  <link rel="stylesheet" href="css/interno.css">
+</head>
+<body class="internal-app">
+  <a class="skip-link" href="#conteudo-interno" data-tooltip="Ir direto para o conteúdo principal">Pular para o conteúdo</a>
+
+  <aside class="app-sidebar" id="sidebar">
+    <div class="app-brand">
+      <img src="assets/img/logo-ifeed.png" alt="Logo iFeed">
+      <span>Área interna</span>
+    </div>
+    <span class="demo-pill">● PROTÓTIPO DEMONSTRATIVO</span>
+    
+    <nav class="side-nav" aria-label="Menu da área interna">
+      <button class="nav-link" data-route="painel" data-tooltip="Visão geral e resumo de atividades">
+        <span class="nav-icon" aria-hidden="true">▦</span>Painel
+      </button>
+      <button class="nav-link" data-route="doacoes" data-tooltip="Explorar itens disponíveis perto de você">
+        <span class="nav-icon" aria-hidden="true">⌖</span>Doações disponíveis
+      </button>
+      <button class="nav-link" data-route="coletas" data-tooltip="Gerenciar retiradas agendadas e concluídas">
+        <span class="nav-icon" aria-hidden="true">⇄</span>Minhas coletas
+      </button>
+      <button class="nav-link" data-route="minhas-doacoes" data-tooltip="Gerenciar publicações e cadastrar alimentos">
+        <span class="nav-icon" aria-hidden="true">＋</span>Minhas doações
+      </button>
+      <button class="nav-link" data-route="impacto" data-tooltip="Acompanhar métricas de impacto e quilos doados">
+        <span class="nav-icon" aria-hidden="true">↗</span>Impacto
+      </button>
+      <button class="nav-link" data-route="reconhecimentos" data-tooltip="Ver conquistas, medalhas e selos">
+        <span class="nav-icon" aria-hidden="true">★</span>Reconhecimentos
+      </button>
+      <button class="nav-link" data-route="perfil" data-tooltip="Editar dados da sua conta e preferências">
+        <span class="nav-icon" aria-hidden="true">○</span>Perfil
+      </button>
+    </nav>
+    
+    <div class="logout-nav">
+      <button class="nav-link" data-action="logout" data-tooltip="Encerrar sessão na plataforma">
+        <span class="nav-icon" aria-hidden="true">↪</span>Sair
+      </button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+      <button class="mobile-menu-trigger" id="menu-trigger" type="button" aria-label="Abrir menu" aria-expanded="false" data-tooltip="Abrir navegação lateral">☰</button>
+      
+      <label class="location-input" data-tooltip="Defina sua localização para encontrar doações próximas">
+        <span aria-hidden="true">⌖</span>
+        <input id="location-field" placeholder="Digite um endereço" aria-label="Localização demonstrativa">
+      </label>
+
+      <div class="top-actions">
+        <button class="icon-button" type="button" data-action="notifications" aria-label="Notificações" data-tooltip="Central de notificações">♧</button>
+        
+        <button class="user-chip" id="user-chip" type="button" aria-expanded="false" data-tooltip="Menu da sua conta">
+          <span class="avatar" id="top-avatar">i</span>
+          <span>
+            <strong id="top-name">Usuário</strong>
+            <small id="top-role">perfil</small>
+          </span>
+        </button>
+
+        <div class="profile-menu hidden" id="profile-menu">
+          <button data-route="perfil" data-tooltip="Ver configurações do perfil">Ver perfil</button>
+          <button data-action="logout" data-tooltip="Desconectar conta">Sair da conta</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-content" id="conteudo-interno" tabindex="-1">
+      <div class="empty-state">
+        <div class="loader" aria-label="Carregando conteúdos da plataforma"></div>
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom" aria-label="Navegação inferior">
+    <button data-route="painel" data-tooltip="Painel">
+      <span aria-hidden="true">▦</span>Painel
+    </button>
+    <button data-route="doacoes" data-tooltip="Doações">
+      <span aria-hidden="true">⌖</span>Doações
+    </button>
+    <button data-action="new-donation" data-tooltip="Cadastrar doação">
+      <span aria-hidden="true">＋</span>Nova doação
+    </button>
+    <button data-route="impacto" data-tooltip="Impacto">
+      <span aria-hidden="true">↗</span>Impacto
+    </button>
+    <button data-route="perfil" data-tooltip="Perfil">
+      <span aria-hidden="true">○</span>Perfil
+    </button>
+  </nav>
+
+  <div class="toast-region" id="toast-region" role="status" aria-live="polite"></div>
+
+  <div class="modal-backdrop hidden" id="modal-backdrop">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-head">
+        <div>
+          <span class="internal-kicker">iFeed</span>
+          <h2 id="modal-title">Janela</h2>
+        </div>
+        <button class="modal-close" id="modal-close" type="button" aria-label="Fechar janela" data-tooltip="Fechar (Esc)">×</button>
+      </div>
+      <div id="modal-content"></div>
+    </section>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+
+  <!-- Script para disparar o efeito Ripple (onda) ao clicar nos botões internos -->
+  <script>
+    document.addEventListener('click', (e) => {
+      const targetBtn = e.target.closest('button, .nav-link, .icon-button, .user-chip, .mobile-bottom button');
+      if (!targetBtn) return;
+
+      const ripple = document.createElement('span');
+      ripple.classList.add('ripple');
+      
+      const rect = targetBtn.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+
+      ripple.style.width = ripple.style.height = `${size}px`;
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+
+      targetBtn.appendChild(ripple);
+
+      ripple.addEventListener('animationend', () => {
+        ripple.remove();
+      });
+    });
+  </script>
+</body>
+</html>
